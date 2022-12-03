@@ -1,1 +1,3 @@
-https://analytics.indeed.com
+https://accounts.indeed.com
+https://billing.indeed.com
+https://resumes.indeed.com
