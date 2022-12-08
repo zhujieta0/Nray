@@ -1,2 +1,1 @@
-https://i.imgur.com/
-https://api.imgur.com
+http://try.discourse.org
