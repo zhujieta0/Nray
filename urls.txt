@@ -1,1 +1,2 @@
-https://www.imgur.com/
+https://i.imgur.com/
+https://api.imgur.com
