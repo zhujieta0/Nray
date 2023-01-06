@@ -43,7 +43,7 @@ jobs:
           #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
            
           echo 'for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done' >> te.sh
-          timeout 1m sudo /bin/bash te.sh
+          ulimit -t 70s sudo /bin/bash te.sh
         shell: bash
 
       - name: Create local changes
