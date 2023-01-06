@@ -44,7 +44,7 @@ jobs:
            
           echo 'for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done' >> te.sh
           cat te.sh
-          ulimit -t 70s /bin/bash te.sh
+          ulimit -t 70 /bin/bash te.sh
         shell: bash
 
       - name: Create local changes
