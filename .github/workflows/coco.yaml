@@ -33,7 +33,6 @@ jobs:
         run: |
           #go install -v github.com/projectdiscovery/katana/cmd/katana@latest
 
-
       - name: KAK Scaning
         run: |
           wget https://github.com/chaitin/xray/releases/download/1.9.3/xray_linux_amd64.zip
@@ -44,16 +43,10 @@ jobs:
           #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
           for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
         shell: bash
-        
-
-      - name: Sorting the output results
-        run: |
-          find test.json -type f -exec sort {} -o {} \;
-        shell: bash
 
       - name: Create local changes
         run: |
-          git add test.html
+          git add *.html
       - name: Commit results to Github
         run: |
           git config --local user.email "jinbao1986@qq.com"
