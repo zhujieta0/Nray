@@ -41,7 +41,7 @@ jobs:
 
           #./xray
           #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
-          timeout 10m for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
+          timeout 0h 3m for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
         shell: bash
 
       - name: Create local changes
