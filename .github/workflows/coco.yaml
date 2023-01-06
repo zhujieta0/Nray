@@ -1,4 +1,4 @@
-name: CCC
+name: zray
 
 on:
     workflow_dispatch:
@@ -39,9 +39,9 @@ jobs:
           unzip xray_linux_amd64.zip
           mv xray_linux_amd64 xray
 
-          ./xray
+          #./xray
           #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
-          for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
+          timeout 10m for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
         shell: bash
 
       - name: Create local changes
@@ -51,7 +51,7 @@ jobs:
         run: |
           git config --local user.email "jinbao1986@qq.com"
           git config --global user.name "TNT"
-          git commit -m "InCloud Report" -a --allow-empty
+          git commit -m "vuln Report" -a --allow-empty
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
