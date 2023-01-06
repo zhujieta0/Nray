@@ -19,7 +19,7 @@ jobs:
           nohup --version
           sudo apt-get update
           sudo apt-get install libpcap-dev
-          rm -rf test.html
+          rm -rf *.html
       - name: Cache Go
         id: cache-go
         uses: actions/cache@v2
