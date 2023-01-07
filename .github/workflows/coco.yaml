@@ -35,6 +35,7 @@ jobs:
 
       - name: KAK Scaning
         timeout-minutes: 340
+        continue-on-error: true
         run: |
           wget https://github.com/chaitin/xray/releases/download/1.9.3/xray_linux_amd64.zip
           unzip xray_linux_amd64.zip
