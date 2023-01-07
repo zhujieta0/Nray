@@ -34,6 +34,7 @@ jobs:
           #go install -v github.com/projectdiscovery/katana/cmd/katana@latest
 
       - name: KAK Scaning
+        timeout-minutes: 340
         run: |
           wget https://github.com/chaitin/xray/releases/download/1.9.3/xray_linux_amd64.zip
           unzip xray_linux_amd64.zip
@@ -42,9 +43,8 @@ jobs:
           #./xray
           #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
            
-          echo 'for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done' >> te.sh
-          cat te.sh
-          ulimit -t 70 /bin/bash te.sh
+          for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
+
         shell: bash
 
       - name: Create local changes
