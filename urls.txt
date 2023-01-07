@@ -6,7 +6,6 @@ http://cook.tiktok.com:5903
 http://hongkong.tiktok.com:7001
 http://effecthouse.tiktok.com
 https://newsroom.tiktok.com
-http://www.tiktok.com
 https://seller-ph.tiktok.com
 https://shop.tiktok.com
 http://business-sso.tiktok.com
@@ -42,14 +41,12 @@ http://s17.tiktok.com:5903
 http://in.tiktok.com
 http://vm.tiktok.com
 http://mxs.tiktok.com:6881
-https://tiktok.com
 https://careers.tiktok.com
 http://asdf.tiktok.com:6002
 http://api.tiktok.com
 http://test.tiktok.com
 http://api-m.tiktok.com
 http://everest.tiktok.com:6003
-http://tiktok.com
 http://civil.tiktok.com:8010
 https://getstarted.tiktok.com
 http://apollo.tiktok.com:6003
