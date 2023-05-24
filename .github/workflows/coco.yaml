@@ -19,6 +19,7 @@ jobs:
           nohup --version
           sudo apt-get update
           sudo apt-get install libpcap-dev
+          rm -rf test.html
 
       - name: Cache Go
         id: cache-go
@@ -32,6 +33,7 @@ jobs:
           GO111MODULE: on
         run: |
           #go install -v github.com/projectdiscovery/katana/cmd/katana@latest
+          go install -v github.com/tomnomnom/waybackurls@latest
 
       - name: KAK Scaning
         timeout-minutes: 340
@@ -40,11 +42,13 @@ jobs:
           wget https://github.com/chaitin/xray/releases/download/1.9.11/xray_linux_amd64.zip
           unzip xray_linux_amd64.zip
           mv xray_linux_amd64 xray
-
+          
           #./xray
           #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
            
-          for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
+          #for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
+          cat urls.txt | waybackurls | ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output test.html
+            
 
         shell: bash
 
