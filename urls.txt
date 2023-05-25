@@ -1,15 +1,1 @@
-postmaster.secure.showmax.com
-cloud.tc.showmax.com
-stage.showmax.com
-cname.showmax.com
-collab.showmax.com
-forum.secure.showmax.com
-cim-api-qa.showmax.com
-help.secure.showmax.com
-stagioscovid.cloud.showmax.com
-imap.secure.showmax.com
-mongodb.secure.showmax.com
-b.showmax.com
-assets.secure.showmax.com
-knowledgemanagement.secure.showmax.com
-www.blog.showmax.com
+testphp.vulnweb.com
