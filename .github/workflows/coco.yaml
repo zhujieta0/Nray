@@ -56,8 +56,8 @@ jobs:
           # unzip xray_linux_amd64.zip
           # mv xray_linux_amd64 xray
           
-          ./xray
-          #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
+          xray
+          #/usr/bin/nohup xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
           for i in $(cat url.txt); do xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
           
           #cat urls.txt | waybackurls | tee -a url.txt
