@@ -32,6 +32,7 @@ jobs:
 
 
       - name: Setting up ProjectDiscovery tools
+        if: steps.tool-cache.outputs.cache-hit != 'true'  # 仅在缓存未命中时安装
         env:
           GO111MODULE: on
         run: |
