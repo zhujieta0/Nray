@@ -65,12 +65,19 @@ jobs:
           
           xray
           #/usr/bin/nohup xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
-          for i in $(cat urls.txt); do xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
-          
+          # for i in $(cat urls.txt); do xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
+  
           #cat urls.txt | waybackurls | tee -a url.txt
           #for i in $(cat urls.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
           #cat urls.txt | waybackurls | ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output test.html
-            
+
+
+
+          for i in $(cat urls.txt); do
+            xray webscan --plugins xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html &
+          done
+          wait
+          
         shell: bash
 
       - name: Create local changes
