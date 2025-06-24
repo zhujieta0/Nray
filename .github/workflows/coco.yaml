@@ -14,7 +14,9 @@ jobs:
       - name: Setup golang
         uses: actions/setup-go@v2
         with:
-          go-version: 1.21
+          go-version: 1.24.4
+          cache: true  # 自动缓存Go模块依赖
+          cache-dependency-path: go.bin  # 根据go.sum变化更新缓存
 
       - name: Setup Dependencies
         run: |
@@ -24,37 +26,40 @@ jobs:
           rm -rf test.html
           rm -rf testphp.vulnweb.com.html
 
-      - name: Cache Go
-        id: cache-go
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/go
-          key: ${{ runner.os }}-go
 
       - name: Setting up ProjectDiscovery tools
         env:
           GO111MODULE: on
         run: |
-          #go install -v github.com/projectdiscovery/katana/cmd/katana@latest
+          go install -v github.com/projectdiscovery/katana/cmd/katana@latest
           go install -v github.com/tomnomnom/waybackurls@latest
+          wget https://github.com/chaitin/xray/releases/download/1.9.11/xray_linux_amd64.zip
+          unzip xray_linux_amd64.zip
+          mv xray_linux_amd64 /home/runner/go/bin/xray
+
+      - name: Cache ProjectDiscovery tools
+        uses: actions/cache@v3
+        id: tool-cache
+        with:
+          path: /home/runner/go/bin
+          key: ${{ runner.os }}-pd-tools-${{ hashFiles('/home/runner/go/bin/**') }}
 
       - name: KAK Scaning
         timeout-minutes: 340
         continue-on-error: true
         run: |
-          wget https://github.com/chaitin/xray/releases/download/1.9.11/xray_linux_amd64.zip
-          unzip xray_linux_amd64.zip
-          mv xray_linux_amd64 xray
+          # wget https://github.com/chaitin/xray/releases/download/1.9.11/xray_linux_amd64.zip
+          # unzip xray_linux_amd64.zip
+          # mv xray_linux_amd64 xray
           
           ./xray
           #/usr/bin/nohup ./xray webscan --plugins xss,sqldet --listen 127.0.0.1:7777  --html-output test.html &
-          for i in $(cat url.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
+          for i in $(cat url.txt); do xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
           
           #cat urls.txt | waybackurls | tee -a url.txt
           #for i in $(cat url.txt); do ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output ${i#*//}.html ;done
           #cat urls.txt | waybackurls | ./xray webscan --plugins  xss,sqldet,xxe,cmd-injection,upload,path-traversal,dirscan,redirect,jsonp --basic-crawler $i --html-output test.html
             
-
         shell: bash
 
       - name: Create local changes
@@ -62,9 +67,9 @@ jobs:
           git add *.html
       - name: Commit results to Github
         run: |
-          git config --local user.email "jinbao1986@qq.com"
-          git config --global user.name "TNT"
-          git commit -m "vuln Report" -a --allow-empty
+          git config --local user.email "admin@fuck.org"
+          git config --global user.name "fukin-team"
+          git commit -m "InCloud Report" -a --allow-empty
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
