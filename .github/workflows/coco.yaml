@@ -30,6 +30,12 @@ jobs:
           rm -rf test.html
           rm -rf testphp.vulnweb.com.html
 
+      - name: Cache ProjectDiscovery tools
+        uses: actions/cache@v3
+        id: tool-cache
+        with:
+          path: /home/runner/go/bin
+          key: ${{ runner.os }}-pd-tools-${{ hashFiles('/home/runner/go/bin/**') }}
 
       - name: Setting up ProjectDiscovery tools
         if: steps.tool-cache.outputs.cache-hit != 'true'  # 仅在缓存未命中时安装
@@ -42,12 +48,12 @@ jobs:
           unzip xray_linux_amd64.zip
           mv xray_linux_amd64 /home/runner/go/bin/xray
 
-      - name: Cache ProjectDiscovery tools
-        uses: actions/cache@v3
-        id: tool-cache
-        with:
-          path: /home/runner/go/bin
-          key: ${{ runner.os }}-pd-tools-${{ hashFiles('/home/runner/go/bin/**') }}
+      # - name: Cache ProjectDiscovery tools
+      #   uses: actions/cache@v3
+      #   id: tool-cache
+      #   with:
+      #     path: /home/runner/go/bin
+      #     key: ${{ runner.os }}-pd-tools-${{ hashFiles('/home/runner/go/bin/**') }}
 
       - name: KAK Scaning
         timeout-minutes: 340
